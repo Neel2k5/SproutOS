@@ -16,14 +16,15 @@ rm -rf build
 mkdir -p build
 mkdir -p build/iso/boot/grub
 
-echo "[2/7] Assembling boot..."
+echo "[2/7] Assembling boot and cpu specific files..."
 $AS $ASFLAGS kernel/arch/i386/boot/boot.s -o build/boot.o
-
+$AS $ASFLAGS kernel/arch/i386/cpu/io.s -o build/io.o
 echo "[3/7] Compiling kernel..."
 $CC $CFLAGS -c kernel/kernel.c -o build/kernel.o
 
-echo "[4/7] Compiling VGA driver..."
+echo "[4/7] Compiling Drivers..."
 $CC $CFLAGS -c kernel/drivers/vga/vga.c -o build/vga.o
+$CC $CFLAGS -c kernel/drivers/serial/serial.c -o build/serial.o
 
 echo "[5/7] Compiling libk..."
 $CC $CFLAGS -c kernel/libk/kprintf.c -o build/kprintf.o
@@ -32,8 +33,10 @@ echo "[6/7] Linking kernel..."
 $CC \
     $LDFLAGS \
     build/boot.o \
+    build/io.o\
     build/kernel.o \
     build/vga.o \
+    build/serial.o\
     build/kprintf.o \
     -o build/kernel.elf
 

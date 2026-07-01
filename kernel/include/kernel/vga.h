@@ -1,5 +1,5 @@
-#ifndef KERNEL_VGA_H
-#define KERNEL_VGA_H
+#ifndef VGA_H
+#define VGA_H
 
 #include <stdint.h>
 #include <stddef.h>
@@ -51,4 +51,4 @@ void term_puts_colored(const char *str,
                        enum vga_color bg);
 enum vga_color term_getfg(void);
 enum vga_color term_getbg(void);
-#endif /* KERNEL_VGA_H */
+#endif
