@@ -49,5 +49,6 @@ void term_setcolor(enum vga_color fg, enum vga_color bg);
 void term_puts_colored(const char *str,
                        enum vga_color fg,
                        enum vga_color bg);
-
+enum vga_color term_getfg(void);
+enum vga_color term_getbg(void);
 #endif /* KERNEL_VGA_H */

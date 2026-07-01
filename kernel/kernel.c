@@ -1,30 +1,17 @@
 #include <kernel/vga.h>
+#include <kernel/kprintf.h>
 
 void kernel_main(void)
 {
     term_init();
-    term_puts("[");
-    term_puts_colored("Sprout OS", VGA_COLOR_LIGHT_GREEN, VGA_COLOR_BLACK);
-    term_puts("]\n");
-    term_puts("\nLog styling\n");
 
-    term_puts("[");
-    term_puts_colored(" ERR ", VGA_COLOR_RED, VGA_COLOR_BLACK);
-    term_puts("]");
-    term_puts(" : Error\n");
+    kprintf(
+        "[\033[92mSprout OS\033[0m]\n\n"
+        "Log styling\n"
 
-    term_puts("[");
-    term_puts_colored(" OK ", VGA_COLOR_GREEN, VGA_COLOR_BLACK);
-    term_puts("]");
-    term_puts(" : Success\n");
+        "\033[91mERR\033[0m: Error\n"
+        "\033[92mOK\033[0m: Success\n"
+        "\033[93mLOG \033[0m: System Log\n\n"
 
-    term_puts("[");
-    term_puts_colored(" WARN ", VGA_COLOR_LIGHT_BROWN, VGA_COLOR_BLACK);
-    term_puts("]");
-    term_puts(" : Warning\n");
-
-    term_puts("\n\n[");
-    term_puts_colored(" OK ", VGA_COLOR_GREEN, VGA_COLOR_BLACK);
-    term_puts("]");
-    term_puts(" : Entering idle loop...\n");
+        "\033[93mLOG\033[0m: Entering idle loop...\n");
 }

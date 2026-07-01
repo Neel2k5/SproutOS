@@ -2,6 +2,8 @@
 
 static size_t term_row;
 static size_t term_col;
+static enum vga_color term_fg;
+static enum vga_color term_bg;
 static uint8_t term_color;
 
 static uint16_t *term_bfr = (uint16_t *)VGA_MEMORY;
@@ -10,7 +12,9 @@ void term_init(void)
 {
     term_row = 0;
     term_col = 0;
-    term_color = vga_entry_color(VGA_COLOR_LIGHT_GREY, VGA_COLOR_BLACK);
+    term_fg = VGA_COLOR_LIGHT_GREY;
+    term_bg = VGA_COLOR_BLACK;
+    term_color = vga_entry_color(term_fg, term_bg);
 
     term_clear();
 }
@@ -98,5 +102,17 @@ void term_clear(void)
 
 void term_setcolor(enum vga_color fg, enum vga_color bg)
 {
+    term_bg = bg;
+    term_fg = fg;
     term_color = vga_entry_color(fg, bg);
+}
+
+enum vga_color term_getfg(void)
+{
+    return term_fg;
+}
+
+enum vga_color term_getbg(void)
+{
+    return term_bg;
 }
