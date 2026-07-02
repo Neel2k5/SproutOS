@@ -16,9 +16,12 @@ rm -rf build
 mkdir -p build
 mkdir -p build/iso/boot/grub
 
-echo "[2/7] Assembling boot and cpu specific files..."
+echo "[2/7] Building boot and cpu specific files..."
 $AS $ASFLAGS kernel/arch/i386/boot/boot.s -o build/boot.o
 $AS $ASFLAGS kernel/arch/i386/cpu/io.s -o build/io.o
+$AS $ASFLAGS kernel/arch/i386/cpu/gdt.s -o build/gdt.o
+$CC $CFLAGS -c kernel/arch/i386/cpu/gdt.c -o build/gdt.c.o
+
 echo "[3/7] Compiling kernel..."
 $CC $CFLAGS -c kernel/kernel.c -o build/kernel.o
 
@@ -32,6 +35,8 @@ $CC $CFLAGS -c kernel/libk/kprintf.c -o build/kprintf.o
 echo "[6/7] Linking kernel..."
 $CC \
     $LDFLAGS \
+    build/gdt.o \
+    build/gdt.c.o\
     build/boot.o \
     build/io.o\
     build/kernel.o \
@@ -55,3 +60,6 @@ echo "=================================="
 echo
 echo "Run with:"
 echo "qemu-system-i386 -cdrom build/SproutOS.iso"
+echo
+echo "Run with serial output:"
+echo "qemu-system-i386 -cdrom build/SproutOS.iso -serial stdio"
