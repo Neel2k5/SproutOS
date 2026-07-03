@@ -28,28 +28,25 @@ static void print_int(int n)
     else
         print_uint(n);
 }
-static void print_hex(unsigned n)
+static void print_hex(unsigned int n)
 {
     term_puts("0x");
-    if (n == 0)
-    {
-        term_putchar('0');
-        return;
-    }
     char buf[8];
-    int ptr = 0;
-    while (n > 0)
+    for (int i = 7; i >= 0; i--)
     {
         unsigned int x = n & 0xf;
         if (x < 10)
-            buf[ptr++] = x + '0';
+            buf[i] = x + '0';
         else
-            buf[ptr++] = (x - 10) + 'A';
+            buf[i] = (x - 10) + 'A';
         n >>= 4;
     }
-    while (ptr--)
-        term_putchar(buf[ptr]);
+    for (int i = 0; i < 8; i++)
+    {
+        term_putchar(buf[i]);
+    }
 }
+
 static void ansi_setcolor(int code)
 {
     switch (code)

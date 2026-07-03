@@ -22,6 +22,6 @@ section .text
         cli
         mov esp,stack_top
         call kernel_main
-        loop:
+        .loop:
             hlt
-            jmp loop
+            jmp .loop

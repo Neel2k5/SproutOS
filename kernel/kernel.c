@@ -2,6 +2,7 @@
 #include <kernel/kprintf.h>
 #include <kernel/serial.h>
 #include <kernel/gdt.h>
+#include <kernel/idt.h>
 
 void kernel_main(void)
 {
@@ -42,8 +43,13 @@ void kernel_main(void)
     }
 
     kprintf("\033[93mLOG\033[0m: Kernel initialization complete\n");
-    kprintf("\033[93mLOG\033[0m: Entering idle loop...\n");
+    kprintf("\033[93mLOG\033[0m: Initializing IDT...\n");
+    serial_puts("LOG: Initializing IDT...\n");
+    idt_init();
+    kprintf("\033[92mOK \033[0m: IDT initialized\n");
+    serial_puts("OK : IDT initialized\n");
 
+    kprintf("\033[93mLOG\033[0m: Entering idle loop...\n");
     serial_puts("LOG: Kernel initialization complete\n");
     serial_puts("LOG: Entering idle loop...\n");
 }
